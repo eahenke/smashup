@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="author" content="Eric Henke" />
+	<title>SmashUp Randomizer</title>
+</head>
+<body>
+	<h1>SmashUp Randomizer</h1>
+	<fieldset>
+		<legend>Sets</legend>
+		<div class="sets" data-bind="foreach: setList">
+			<input type="checkbox" data-bind="attr: {name: name}, value: name, checked: checked" />
+			<label data-bind="attr: {for: name}, text: name">
+			</label>
+		</div>
+	</fieldset>
+
+	<fieldset class="playerNumber">
+		<legend>Number of players</legend>
+		<input type="radio" name ="players" value="2" checked/>
+		<label for="2">2</label>
+		<input type="radio" name ="players" value="3" />
+		<label for="3">3</label>
+		<input type="radio" name ="players" value="4" />
+		<label for="4">4</label>
+	</fieldset>
+
+	<button data-bind="click: generate">Get Cards</button>
+
+	<div class="results" data-bind="if: valid">
+		<!-- ko foreach: playerList -->
+		<div class="player">
+			<h2 data-bind="text: name"></h2>
+			<ul class="factions" data-bind="foreach: factions">
+				<li class="faction-item" data-bind="text: $data"></li>
+			</ul>
+		</div>
+
+		<!-- /ko -->
+	</div>
+
+	<script src="js/lib/knockout-3.3.0.js"></script>
+    <script src="js/smashup.js"></script>
+</body>
+</html>
