@@ -46,7 +46,7 @@ var Player = function(number) {
 var ViewModel = function() {
 	var self = this;
 
-	self.valid = ko.observable(false);
+	self.valid = ko.observable(undefined);
 
 	self.setList = ko.observableArray([]);
 
