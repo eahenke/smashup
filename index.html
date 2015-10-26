@@ -11,9 +11,15 @@
 	<fieldset>
 		<legend>Sets</legend>
 		<div class="sets" data-bind="foreach: setList">
-			<input type="checkbox" data-bind="attr: {name: name}, value: name, checked: checked" />
-			<label data-bind="attr: {for: name}, text: name">
+			<label>
+				<input type="checkbox" data-bind="attr: {name: name}, value: name, checked: checked" />
+				
+				<!-- Knockout binding below necessary for checkbox to appear with label after -->
+
+				<!-- ko text: name -->
+				<!-- /ko -->
 			</label>
+
 		</div>
 	</fieldset>
 

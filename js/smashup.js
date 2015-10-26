@@ -94,7 +94,7 @@ var ViewModel = function() {
 	};
 
 	self.getSets = function() {
-		var setBoxes = document.querySelectorAll('.sets > input:checked');
+		var setBoxes = document.querySelectorAll('.sets input:checked');
 		for(var i = 0; i < setBoxes.length; i++) {
 			var setName = setBoxes[i].name;
 			selectedSets.push(getSetByName(setName));
