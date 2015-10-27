@@ -46,37 +46,57 @@ var Player = function(number) {
 var ViewModel = function() {
 	var self = this;
 
+	// Observables
 	self.valid = {
 		result: ko.observable(true),
 		message: ko.observable(''),
 	}
 
+	self.playerList = ko.observableArray([]);
 	self.setList = ko.observableArray([]);
 
-	sets.forEach(function(set) {
-		self.setList().push(new Set(set));
-	});
-
+	// Variables
 	var selectedSets = [];
-	self.playerList = ko.observableArray([]);
 
+
+
+
+	// Methods
+
+	// Main method, calls the methods that generate and assign factions and players
+	// Bound to button
 	self.generate = function() {
 		//resets
 		selectedSets = [];
 		self.playerList([]);
 
-		self.getSets();
-		self.getPlayers();
+		getSets();
+		getPlayers();
 
 		validate();
 
+		// If choices are valid, generate random cards
 		if(self.valid.result) {			
-			self.getCards();			
+			getFactions();			
+		}
+
+		// If mobile, scroll to reveal results
+		if($(window).width() < 800) {
+			scrollToSection('.results');			
 		}
 	}
 	
-	
-	self.getPlayers = function() {
+	// Private functions
+
+	//Loop through model and create observable objects for card sets
+	function initialize() {
+		sets.forEach(function(set) {
+			self.setList().push(new Set(set));
+		});		
+	}
+
+	// Creates player objects for the desired number of players
+	function getPlayers() {
 		var playerNumb;
 		var list = [];
 		
@@ -94,7 +114,8 @@ var ViewModel = function() {
 		self.playerList(list);
 	};
 
-	self.getSets = function() {
+	// Pulls the sets selected by the user
+	function getSets() {
 		var setBoxes = document.querySelectorAll('.sets input:checked');
 		for(var i = 0; i < setBoxes.length; i++) {
 			var setName = setBoxes[i].name;
@@ -102,7 +123,8 @@ var ViewModel = function() {
 		}
 	}
 
-	self.getCards = function() {
+	// Randomly assigns factions from the selected sets to players
+	function getFactions() {
 		var factionList = [];
 		selectedSets.forEach(function(set) {
 	 		factionList = factionList.concat(set.factions());
@@ -112,19 +134,22 @@ var ViewModel = function() {
 			self.playerList().forEach(function(player){
 				var faction = getRandom(factionList);
 				player.factions.push(faction);				
-				//cut faction so it can't be chosen again
+				
+				//Cut faction so it can't be chosen again
 				remove(faction, factionList);
 			});
 		}
 	};
 
+	/* Checks to make sure there are enough factions in the selected sets to support 
+		the desired number of players.  If not, a message is set, alerting the maximum number
+		of players.  Each player requires 2 factions */
 	function validate() {
 		var factionNum = 0;
 		selectedSets.forEach(function(set) {
 			factionNum += set.factions().length;
 		});		
 		var maxPlayers = Math.floor(factionNum / 2);
-
 		
 		if(factionNum / 2 >= self.playerList().length) {
 			self.valid.result(true);
@@ -137,6 +162,7 @@ var ViewModel = function() {
 
 	// Helper functions
 
+	//Retrieve set object by name
 	function getSetByName(name) {
 		for(var i = 0; i < self.setList().length; i++) {
 			if(self.setList()[i].name() == name) {
@@ -145,11 +171,13 @@ var ViewModel = function() {
 		}
 	}
 
-	function getRandom(items) {
-		var item = items[Math.floor(Math.random() * items.length)];
+	// Get random item from array
+	function getRandom(array) {
+		var item = array[Math.floor(Math.random() * array.length)];
 		return item;
 	}
 
+	// Remove element from array
 	function remove(el, array) {
 		var index = array.indexOf(el);
 		if(index > -1) {
@@ -157,7 +185,16 @@ var ViewModel = function() {
 		}
 	}
 
+	//Scroll to given section.  Section must be a valid CSS selector
+	function scrollToSection(section) {
+		$('html, body').animate({
+    		scrollTop: $(section).offset().top
+		}, 1000);
+	}
 
+
+	//Initialize
+	initialize();
 }
 
 ko.applyBindings(new ViewModel());
