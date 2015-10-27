@@ -46,7 +46,10 @@ var Player = function(number) {
 var ViewModel = function() {
 	var self = this;
 
-	self.valid = ko.observable(undefined);
+	self.valid = {
+		result: ko.observable(true),
+		message: ko.observable(''),
+	}
 
 	self.setList = ko.observableArray([]);
 
@@ -65,12 +68,10 @@ var ViewModel = function() {
 		self.getSets();
 		self.getPlayers();
 
-		if(validate()) {
-			self.valid(true);
+		validate();
+
+		if(self.valid.result) {			
 			self.getCards();			
-		} else {
-			self.valid(false);
-			console.log('not enough sets');
 		}
 	}
 	
@@ -121,12 +122,15 @@ var ViewModel = function() {
 		var factionNum = 0;
 		selectedSets.forEach(function(set) {
 			factionNum += set.factions().length;
-		});
+		});		
+		var maxPlayers = Math.floor(factionNum / 2);
+
 		
 		if(factionNum / 2 >= self.playerList().length) {
-			return true;
+			self.valid.result(true);
 		} else {
-			return false;
+			self.valid.result(false);
+			self.valid.message('The selected sets do not have enough factions for the number of players.  The maximum number of players possible given the selected sets is ' + maxPlayers + '.  Please either choose more sets or fewer players.');
 		}
 
 	}

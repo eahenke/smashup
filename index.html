@@ -35,7 +35,7 @@
 
 	<button data-bind="click: generate">Get Cards</button>
 
-	<div class="results" data-bind="if: valid">
+	<div class="results" data-bind="if: valid.result">
 		<!-- ko foreach: playerList -->
 		<div class="player">
 			<h2 data-bind="text: name"></h2>
@@ -46,8 +46,8 @@
 		<!-- /ko -->
 	</div>
 
-	<div class="invalid" data-bind="if: valid() === false">
-		<p>The selected sets do not have enough factions for the number of players.  Please either choose more sets, or fewer players.</p>
+	<div class="invalid" data-bind="ifnot: valid.result">
+		<p data-bind="text: valid.message"></p>
 	</div>
 
 	<script src="js/lib/knockout-3.3.0.js"></script>
