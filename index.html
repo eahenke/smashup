@@ -4,6 +4,7 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="author" content="Eric Henke" />
+	<meta name="viewport" content="width=device-width" /> 
 	<title>SmashUp Randomizer</title>
 	
 	<!-- Fonts -->
@@ -44,9 +45,9 @@
 				</fieldset>
 			</div>
 
-			<div class="button-wrap">
-				<button data-bind="click: generate">Get Cards</button>
-			</div>
+			
+			<button data-bind="click: generate">Get Cards</button>
+			
 		</section>
 
 		<section class="results">
@@ -62,7 +63,8 @@
 			</div>
 
 			<div class="invalid" data-bind="ifnot: valid.result">
-				<p data-bind="text: valid.message"></p>
+				<h2>Problem...</h2>
+				<p class="message" data-bind="text: valid.message"></p>
 			</div>
 		</section>
 

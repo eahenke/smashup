@@ -1,3 +1,5 @@
+/* Defaults, Resets */
+
 html {
 	box-sizing: border-box;
 }
@@ -10,8 +12,9 @@ html, body {
 	height: 100%;
 	padding: 0;
 	margin: 0;
-	font-family: 'Open-Sans', sans-serif;
 	background-color: #f1f1f1;
+	font-family: 'Open-Sans', sans-serif;
+	font-size: 16px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -34,76 +37,89 @@ ul, li {
 
 fieldset {
 	display: inline;
+	width: 100%;
+	margin: 0;
 	border: none;
 }
 
-input[type=checkbox] {
-	-webkit-appearance: none;
-	width: 1.1em;
-	height: 1.1em;
-	background-color: #FFF;
-	vertical-align: middle;
-}
-
 label {
+	margin-right: 1em;
 	font-size: 1.1em;
-	/*margin-right: 0.5em;*/
+	cursor: pointer;
+	white-space: nowrap;
 }
 
 legend {
 	font-weight: bold;
-	font-size: 1.2em;
+	font-size: 1.3em;
+	margin-bottom: 0.5em;
 }
+
+/* Styles */
 
 .container {
-	width: 100%;
-	height: 100%;
-	margin: 0 auto;
-	padding: 1em;
-	
-	background-color: #FFFFFD;
-
+	/*overflow: auto;*/
 }
 
-h1 {
-	font-size: 3em;
-}
+/* Controls */
 
 .controls {
 	background-color: #03A9F4;
 	color: #FFF;
 	padding: 2em;
+	overflow: hidden;
 }
 
-.results {
-	text-align: center;
+.controls > h1 {
+	font-size: 3em;
 }
 
-
-
-.sets, .player-number, .button-wrap {
-	width: 85%;
+.sets, .player-number {
 	margin: 1em auto 1em auto;
 	text-align: center;
 }
 
-
-.player {
-	display: inline-block;
-	width: 24%;
-	padding: 0;
-	margin: 0;
+fieldset {
+	color: #B3E5FC;
 }
 
-.factions {
-	margin:0;
+input[type=checkbox], input[type=radio] {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	width: 1.1em;
+	height: 1.1em;
+	margin-top: -2px;
+	vertical-align: middle;
+	background-color: #FFF;
+	cursor: pointer;
+}
+
+input[type=radio] {
+	border-radius: 100%;
+	margin-right: 0.5em;
+}
+
+input:checked::before {
+	content: '';
+	display: block;
+	width: 100%;
+	height: 100%;
+	background-color: #8BC34A;
+}
+
+input[type=radio]:checked::before {
+	border-radius: 100%;
+}
+
+input:focus {
+	outline: none;
 }
 
 button {
+	display: block;
 	width: 180px;
 	height: 60px;
-	margin-left: auto;
-	margin-right: auto;
+	margin: 2em auto;
 	border-radius: 5px;
 	color: white;
 	background-color: #8BC34A;
@@ -120,4 +136,76 @@ button:hover {
 	-webkit-transform: scale(1.1);
 	-moz-transform: scale(1.1);
 	transform: scale(1.1);	
+}
+
+/* Results */
+
+.results {
+	text-align: center;
+	color: #212121;
+}
+
+.results h2 {
+	font-size: 2em;
+}
+
+.players {
+	overflow: hidden;
+}
+
+.player {
+	display: inline-block;
+	width: 22%;
+	height: 200px;
+	padding: 0.5em;
+	margin: 1em 1%;
+	background-color: #FFFFFD;
+	box-shadow: 2px 4px 8px #999;
+}
+
+.factions {
+	margin: 1em 0 0 0;
+	font-size: 1.5em;
+}
+
+.factions > li {
+	margin-top: 0.5em;
+}
+
+.invalid {
+	width: 60%;
+	margin: 1em auto;
+}
+
+.message {
+	margin: 1em auto;
+}
+
+@media screen and (max-width: 800px) {
+	
+	.controls {
+		padding: 2em 0;
+	}
+
+	.sets label {
+		display: block;
+		text-align: left;
+		font-size: 1.2em;
+	}
+
+	.results {
+		width: 90%;
+		margin: 0 auto;
+	}
+
+	.player {
+		display: block;
+		width: 90%;
+		margin: 1em auto;
+	}
+
+	.invalid {
+		text-align: left;
+		width: 100%;
+	}
 }
